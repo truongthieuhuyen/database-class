@@ -35,6 +35,17 @@ public class Laptop {
         this.ssd = ssd;
     }
 
+    public Laptop(String name,String maker, Float screen_size, String ram, String cpu, String card,Float price) {
+        this.name = name;
+        this.maker = maker;
+        this.screen_size = screen_size;
+        this.ram = ram;
+        this.cpu = cpu;
+        this.card = card;
+        this.price = price;
+    }
+
+
     public Integer getId() {
         return id;
     }

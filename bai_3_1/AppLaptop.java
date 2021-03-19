@@ -35,26 +35,16 @@ public class AppLaptop {
                 System.out.println(laptop.getId()+". "+ laptop.getName()+", maker: "+ laptop.getMaker()+", price: "+ laptop.getPrice());
             }
 
-
             List<Laptop> laptops1 = laptopServices.findLaptopByMaker("ASUS","hdd",null);
             for (Laptop laptop1: laptops1
                  ) {
                 System.out.println("\n"+laptop1.getName()+", maker: "+ laptop1.getMaker()+", hdd: "+ laptop1.getHdd()+", ssd: "+ laptop1.getSsd());
             }
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console" + e);
             return;
         }
     }
-
-
-//    public List<Laptop> findLaptopByPrice(Long fromPrice, Long toPrice){
-//        List<Laptop> response = new ArrayList<>();
-////        Scanner scanner = new Scanner();
-//        String query = "SELECT * FROM store_cms_plusplus.laptop where hdd IS NOT NULL AND maker = 'asus'";
-//
-//        return response;
-//    }
-
 
 }
