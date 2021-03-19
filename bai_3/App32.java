@@ -1,7 +1,7 @@
-package DBclass.bai32;
+package DBclass.bai_3;
 
-import DBclass.bai_3_1.Laptop;
-import DBclass.bai_3_1.LaptopServices;
+import DBclass.Laptop_Database.Laptop;
+import DBclass.Laptop_Database.LaptopServices;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

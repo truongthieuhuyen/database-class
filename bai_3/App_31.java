@@ -1,7 +1,9 @@
-package DBclass.bai_3_1;
+package DBclass.bai_3;
+
+import DBclass.Laptop_Database.Laptop;
+import DBclass.Laptop_Database.LaptopServices;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class App_31 {
