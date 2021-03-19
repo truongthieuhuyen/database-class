@@ -1,4 +1,7 @@
-package DBclass.bai_3_1;
+package DBclass.Laptop_Database;
+
+import DBclass.Laptop_Database.Counter;
+import DBclass.Laptop_Database.Laptop;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -132,18 +135,42 @@ public class LaptopServices {
     /*
     4.1 getCounterByMaker
      */
-    public List<DBclass.bai_3_1.Counter> getCounterByMaker(String maker, Integer quantity){
-        List<DBclass.bai_3_1.Counter> response = new ArrayList<>();
+    public List<Counter> getCounterByMaker(){
+        List<Counter> response = new ArrayList<>();
         try {
             String sql = "select maker,count(*) as quantity from laptop group by maker order by quantity desc";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
-                maker = resultSet.getString("maker");
-                quantity = resultSet.getInt("quantity");
+                String maker = resultSet.getString("maker");
+                Integer quantity = resultSet.getInt("quantity");
 
-                Counter counter = new Counter(maker, quantity);
+                Counter counter = new Counter(maker,quantity);
                 response.add(counter);
+            }
+        }
+        catch (Exception e){
+            System.out.println("ERROR: "+e);
+        }
+        return response;
+    }
+
+    /*
+    4.2 getStatisticByMaker
+    Viết chức năng thống kê số lượng, số tiền bán được của mỗi hãng
+     */
+    public List<Statistic> getStatisticByMaker(){
+        List<Statistic> response = new ArrayList<>();
+        try {
+            String sql = "select maker,sum(sold) as total_sold,sum(price*sold) as total_money from laptop group by maker";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()){
+                String maker = resultSet.getString("maker");
+                Integer sold = resultSet.getInt("total_sold");
+                Float totalMoney = resultSet.getFloat("total_money");
+                Statistic statistic = new Statistic(maker,sold,totalMoney);
+                response.add(statistic);
             }
         }
         catch (Exception e){

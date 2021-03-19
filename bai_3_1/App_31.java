@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppLaptop {
+public class App_31 {
 
     public static void main(String[] args) {
         System.out.println("-------- MySQL JDBC Connection Demo ------------");

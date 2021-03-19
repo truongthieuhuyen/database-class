@@ -1,15 +1,15 @@
-package DBclass.bai_41;
+package DBclass.bai_4;
 
-import DBclass.bai_3_1.Counter;
-import DBclass.bai_3_1.LaptopServices;
+import DBclass.Laptop_Database.Counter;
+import DBclass.Laptop_Database.LaptopServices;
+import DBclass.Laptop_Database.Statistic;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-public class App_41 {
-    //    select maker,count(*) as quantity from laptop group by maker order by count(*) desc;
+public class App_42 {
     public static void main(String[] args) {
         System.out.println("-------- MySQL JDBC Connection Demo ------------");
         try {
@@ -29,7 +29,7 @@ public class App_41 {
             System.out.println("SQL Connection to database established!");
 
             LaptopServices laptopServices = new LaptopServices(connection);
-            List<Counter> result = laptopServices.getCounterByMaker("maker",1);
+            List<Statistic> result = laptopServices.getStatisticByMaker();
             System.out.println( result );
 
         } catch (SQLException e) {

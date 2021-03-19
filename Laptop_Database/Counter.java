@@ -1,4 +1,4 @@
-package DBclass.bai_3_1;
+package DBclass.Laptop_Database;
 
 public class Counter {
     private String maker;
@@ -7,6 +7,10 @@ public class Counter {
     public Counter(String maker, Integer quantity) {
         this.maker = maker;
         this.quantity = quantity;
+    }
+
+    public Counter() {
+
     }
 
     public String getMaker() {
@@ -27,9 +31,9 @@ public class Counter {
 
     @Override
     public String toString() {
-        return "Counter{" +
+        return "\n Counter{" +
                 "maker='" + maker + '\'' +
                 ", quantity=" + quantity +
-                '}'+'\n';
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package DBclass.bai_3_1;
+package DBclass.Laptop_Database;
 
 import java.sql.Timestamp;
 
