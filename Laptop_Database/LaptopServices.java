@@ -2,6 +2,8 @@ package DBclass.Laptop_Database;
 
 import DBclass.Laptop_Database.Counter;
 import DBclass.Laptop_Database.Laptop;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
+import com.mysql.cj.xdevapi.InsertStatement;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,7 +50,7 @@ public class LaptopServices {
     }
 
     /*
-    findLaptopByMaker
+    3.1 findLaptopByMaker
      */
     public List<Laptop> findLaptopByMaker(String maker, String hdd, String ssd) throws SQLException {
         List<Laptop> response1 = new ArrayList<>();
@@ -81,14 +83,14 @@ public class LaptopServices {
     }
 
     /*
-    findLaptopBySelection
+    3.2 findLaptopBySelection
      */
-    public List<Laptop> findLaptopBySelection(Float minPrice, Float maxPrice,String name, String maker, Float screen_size, String ram, String cpu, String card, Float price) {
+    public List<Laptop> findLaptopBySelection(Float minPrice, Float maxPrice, String name, String maker, Float screen_size, String ram, String cpu, String card, Float price) {
         List<Laptop> response3_2 = new ArrayList<>();
         try {
             String query = "SELECT * FROM  laptop WHERE true ";
-            if (name != null){
-                query = query +"AND name = "+ name+"'";
+            if (name != null) {
+                query = query + "AND name = " + name + "'";
             }
             if (maker != null) {
                 query = query + "AND maker = '" + maker + "'";
@@ -123,7 +125,7 @@ public class LaptopServices {
                 card = resultSet.getString("card");
                 price = resultSet.getFloat("price");
 
-                Laptop laptop = new Laptop(name,maker,screen_size,ram,cpu,card,price);
+                Laptop laptop = new Laptop(name, maker, screen_size, ram, cpu, card, price);
                 response3_2.add(laptop);
             }
         } catch (Exception e) {
@@ -135,47 +137,73 @@ public class LaptopServices {
     /*
     4.1 getCounterByMaker
      */
-    public List<Counter> getCounterByMaker(){
+    public List<Counter> getCounterByMaker() {
         List<Counter> response = new ArrayList<>();
         try {
             String sql = "select maker,count(*) as quantity from laptop group by maker order by quantity desc";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String maker = resultSet.getString("maker");
                 Integer quantity = resultSet.getInt("quantity");
 
-                Counter counter = new Counter(maker,quantity);
+                Counter counter = new Counter(maker, quantity);
                 response.add(counter);
             }
-        }
-        catch (Exception e){
-            System.out.println("ERROR: "+e);
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
         }
         return response;
     }
 
     /*
-    4.2 getStatisticByMaker
-    Viết chức năng thống kê số lượng, số tiền bán được của mỗi hãng
+    4.2 Viết chức năng thống kê số lượng, số tiền bán được của mỗi hãng -- getStatisticByMaker
      */
-    public List<Statistic> getStatisticByMaker(){
+    public List<Statistic> getStatisticByMaker() {
         List<Statistic> response = new ArrayList<>();
         try {
             String sql = "select maker,sum(sold) as total_sold,sum(price*sold) as total_money from laptop group by maker";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String maker = resultSet.getString("maker");
                 Integer sold = resultSet.getInt("total_sold");
                 Float totalMoney = resultSet.getFloat("total_money");
-                Statistic statistic = new Statistic(maker,sold,totalMoney);
+                Statistic statistic = new Statistic(maker, sold, totalMoney);
                 response.add(statistic);
             }
-        }
-        catch (Exception e){
-            System.out.println("ERROR: "+e);
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
         }
         return response;
+    }
+
+    /*
+    5.1 Viết tính năng thêm laptop vào danh mục sản phẩm -- addLapTopToDatabase
+    Output: Insert vào DB
+    Hàm test: Search trong DB sản phẩm có tên giống tên vừa thêm vào => output có dữ liệu
+     */
+    public void addLaptopToDatabase(Integer id, String name, String url, String maker, String type, String ram, String cpu, String ssd, String hdd, Float price, String card, String screen_resolution, Float screen_size, Integer sold) {
+        List<Laptop> response = new ArrayList<>();
+        try {
+            String insert = "INSERT INTO `store_cms_plusplus`.`laptop` (`id`, `name`, `url`, `maker`, `type`, `ram`, `cpu`, `ssd`, `hdd`, `price`, `card`, `screen_resolution`, `screen_size`, `sold`) VALUES ('"+id+"', '"+name+"', '"+url+"', '"+maker+"', '"+type+"', '"+ram+"', '"+cpu+"', '"+ssd+"', '"+hdd+"', '"+price+"', '"+card+"', '"+screen_resolution+"', '"+screen_size+"', '"+sold+"');";
+
+            Statement insertStatement = connection.createStatement();
+            insertStatement.execute(insert);
+            System.out.println("INSERTED SUCCESSFUL");
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
+        }
+    }
+    //delete records in laptop
+    public void deleteLaptop(Integer id){
+        try {
+            String delete = "DELETE FROM `store_cms_plusplus`.`laptop` WHERE (`id` = '"+id+"');";
+            Statement deleteStatement = connection.createStatement();
+            deleteStatement.execute(delete);
+            System.out.println("DELETED row id = '"+id+"'");
+        } catch (Exception e){
+            System.out.println("ERROR :"+e);
+        }
     }
 }
