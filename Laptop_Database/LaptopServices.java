@@ -5,10 +5,7 @@ import DBclass.Laptop_Database.Laptop;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 import com.mysql.cj.xdevapi.InsertStatement;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,15 +114,24 @@ public class LaptopServices {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
                 name = resultSet.getString("name");
+                String url = resultSet.getString("url");
                 maker = resultSet.getString("maker");
-                screen_size = resultSet.getFloat("screen_size");
+                String type = resultSet.getString("type");
                 ram = resultSet.getString("ram");
                 cpu = resultSet.getString("cpu");
-                card = resultSet.getString("card");
+                String ssd = resultSet.getString("ssd");
+                String hdd = resultSet.getString("hdd");
                 price = resultSet.getFloat("price");
+                card = resultSet.getString("card");
+                String screen_resolution = resultSet.getString("screen_resolution");
+                screen_size = resultSet.getFloat("screen_size");
+                Integer sold = resultSet.getInt("sold");
+                Timestamp created_timestamp = resultSet.getTimestamp("created_timestamp");
+                Timestamp last_updated_timestamp = resultSet.getTimestamp("last_updated_timestamp");
 
-                Laptop laptop = new Laptop(name, maker, screen_size, ram, cpu, card, price);
+                Laptop laptop = new Laptop(id,name,url,maker,type,ram,cpu,ssd,hdd,price,card,screen_resolution,screen_size,sold,created_timestamp,last_updated_timestamp);
                 response3_2.add(laptop);
             }
         } catch (Exception e) {

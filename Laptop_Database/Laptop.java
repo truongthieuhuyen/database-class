@@ -35,16 +35,24 @@ public class Laptop {
         this.ssd = ssd;
     }
 
-    public Laptop(String name,String maker, Float screen_size, String ram, String cpu, String card,Float price) {
+    public Laptop(Integer id, String name, String url, String maker, String type, String ram, String cpu, String ssd, String hdd, Float price, String card, String screen_resolution, Float screen_size, Integer sold, Timestamp created_timestamp, Timestamp last_updated_timestamp) {
+        this.id = id;
         this.name = name;
+        this.url = url;
         this.maker = maker;
-        this.screen_size = screen_size;
+        this.type = type;
         this.ram = ram;
         this.cpu = cpu;
-        this.card = card;
+        this.ssd = ssd;
+        this.hdd = hdd;
         this.price = price;
+        this.card = card;
+        this.screen_resolution = screen_resolution;
+        this.screen_size = screen_size;
+        this.sold = sold;
+        this.created_timestamp = created_timestamp;
+        this.last_updated_timestamp = last_updated_timestamp;
     }
-
 
     public Integer getId() {
         return id;
@@ -193,6 +201,6 @@ public class Laptop {
                 ", sold=" + sold +
                 ", created_timestamp=" + created_timestamp +
                 ", last_updated_timestamp=" + last_updated_timestamp +
-                '}';
+                '}'+"\n";
     }
 }
