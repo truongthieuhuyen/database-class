@@ -186,10 +186,10 @@ public class Laptop {
     public String toString() {
         return "Laptop{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
+//                ", name='" + name + '\'' +
+//                ", url='" + url + '\'' +
                 ", maker='" + maker + '\'' +
-                ", type='" + type + '\'' +
+//                ", type='" + type + '\'' +
                 ", ram='" + ram + '\'' +
                 ", cpu='" + cpu + '\'' +
                 ", ssd='" + ssd + '\'' +

@@ -82,12 +82,15 @@ public class LaptopServices {
     /*
     3.2 findLaptopBySelection
      */
-    public List<Laptop> findLaptopBySelection(Float minPrice, Float maxPrice, String name, String maker, Float screen_size, String ram, String cpu, String card, Float price) {
+    public List<Laptop> findLaptopBySelection(Float minPrice, Float maxPrice,Integer id, String name, String maker, Float screen_size, String ram, String cpu, String card, Float price) {
         List<Laptop> response3_2 = new ArrayList<>();
         try {
             String query = "SELECT * FROM  laptop WHERE true ";
+            if (id != null) {
+                query = query + "AND id = '" + id + "'";
+            }
             if (name != null) {
-                query = query + "AND name = " + name + "'";
+                query = query + "AND name = '" + name + "'";
             }
             if (maker != null) {
                 query = query + "AND maker = '" + maker + "'";
@@ -114,7 +117,7 @@ public class LaptopServices {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                Integer id = resultSet.getInt("id");
+                id = resultSet.getInt("id");
                 name = resultSet.getString("name");
                 String url = resultSet.getString("url");
                 maker = resultSet.getString("maker");
@@ -210,6 +213,22 @@ public class LaptopServices {
             System.out.println("DELETED row id = '"+id+"'");
         } catch (Exception e){
             System.out.println("ERROR :"+e);
+        }
+    }
+
+    /*
+    5.2: Viết tính năng cập nhật số lượng đã bán laptop -- updateLaptopHasSold
+    Input: ID laptop, số lượng tăng thêm.
+    Output: Cập nhật số lượng đã bán trong DB, cập nhật last_updated_timestamp cho bản ghi DB.
+     */
+    public void updateLaptopHasSold(Integer id, Integer sold){
+        try {
+            String update = "update laptop set sold = '"+sold+"',last_updated_timestamp = current_timestamp() where id = '"+id+"';";
+            Statement updateStatement = connection.createStatement();
+            updateStatement.executeUpdate(update);
+            System.out.println("UPDATED row id ="+id);
+        }catch (Exception e){
+            System.out.println("ERROR");
         }
     }
 }
