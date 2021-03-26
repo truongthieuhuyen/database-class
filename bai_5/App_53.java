@@ -32,7 +32,7 @@ public class App_53 {
 //            LaptopServices laptopServices = new LaptopServices(connection);
 //            System.out.println(laptops);
             StudentManagementProgram studentManagementProgram = new StudentManagementProgram(connection);
-            studentManagementProgram.updateNoOfStudent("SE","0");
+            studentManagementProgram.updateAverageScore("S001");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console" + e);
             return;

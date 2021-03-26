@@ -28,4 +28,21 @@ public class StudentManagementProgram {
             System.out.println("Syntax ERROR");
         }
     }
+
+    public void updateAverageScore(String StudentID){
+        try {
+            String updateSQL = "UPDATE students SET AverageScore = (SELECT \n" +
+                    "            (students_results.MAX_mark * students_results.Credits) / SUM(students_results.Credits)\n" +
+                    "        FROM\n" +
+                    "            students_results\n" +
+                    "        WHERE\n" +
+                    "            StudentID = '"+StudentID+"')\n" +
+                    "WHERE StudentID = '"+StudentID+"';";
+            Statement updateStatment = connection.createStatement();
+            updateStatment.executeUpdate(updateSQL);
+            System.out.println("UPDATED AverageScore where StudentID = '"+StudentID+"'");
+        }catch (Exception e){
+            System.out.println("Syntax ERROR");
+        }
+    }
 }
